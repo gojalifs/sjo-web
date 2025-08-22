@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reveal on scroll */
+.reveal { opacity: 0; transform: translateY(14px); }
+.reveal-zoom { transform: scale(0.96); }
+.reveal-left { transform: translateX(-14px); }
+.reveal-right { transform: translateX(14px); }
+.reveal-show { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s cubic-bezier(.2,.65,.3,1); }
+
+/* Float accent */
+@keyframes floaty { 0%{transform:translateY(0)} 50%{transform:translateY(-6px)} 100%{transform:translateY(0)} }
+.floaty { animation: floaty 6s ease-in-out infinite; }
+
+/* Micro interaction */
+.btn-press:active { transform: translateY(1px); }
+
+/* Parallax perf hint */
+.parallax-wc { will-change: transform; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-zoom, .reveal-left, .reveal-right, .reveal-show,
+  .floaty { transition: none !important; animation: none !important; }
+}
