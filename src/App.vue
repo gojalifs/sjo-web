@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-white text-slate-800">
+  <div class="min-h-screen bg-white text-slate-800 overflow-x-hidden">
     <div class="w-full bg-rose-100 text-rose-900 text-sm text-center py-2">
       Gratis lensa standar untuk pembelian frame tertentu • Pengiriman se-Indonesia
     </div>
@@ -29,9 +29,48 @@
             <svg class="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h15l-1.5 9h-13z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
             Keranjang ({{ cartCount }})
           </button>
+          <!-- Mobile menu toggle (top-right on small screens) -->
+          <button @click="mobileOpen = true" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-xl border hover:bg-rose-50 btn-press" aria-label="Buka menu" aria-controls="mobile-drawer" :aria-expanded="mobileOpen ? 'true' : 'false'">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
         </div>
       </nav>
     </header>
+
+    <!-- Mobile side navigation drawer & overlay -->
+    <transition name="fade">
+      <div v-if="mobileOpen" class="fixed inset-0 z-50 md:hidden" @click.self="mobileOpen = false">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <aside id="mobile-drawer" class="absolute inset-y-0 right-0 w-72 max-w-[85%] bg-white shadow-xl ring-1 ring-rose-100 p-4 flex flex-col translate-x-0 transition-transform">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-rose-500 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path d="M9 10a3 3 0 1 0-6 0v1a4 4 0 0 0 4 4h1a4 4 0 0 0 4-4v-1a3 3 0 1 0-6 0v1a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-1Zm12 0a3 3 0 1 0-6 0v1a4 4 0 0 0 4 4h1a4 4 0 0 0 4-4v-1a3 3 0 1 0-6 0v1a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-1Z"/></svg>
+              </span>
+              <span class="font-bold">SoftRed Optics</span>
+            </div>
+            <button @click="mobileOpen = false" class="inline-flex h-9 w-9 items-center justify-center rounded-lg hover:bg-rose-50" aria-label="Tutup menu">
+              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <nav class="mt-4">
+            <ul class="space-y-1 text-sm font-medium">
+              <li><a @click="mobileOpen = false" href="#koleksi" class="block rounded-lg px-3 py-2 hover:bg-rose-50">Koleksi</a></li>
+              <li><a @click="mobileOpen = false" href="#promo" class="block rounded-lg px-3 py-2 hover:bg-rose-50">Promo</a></li>
+              <li><a @click="mobileOpen = false" href="#testimoni" class="block rounded-lg px-3 py-2 hover:bg-rose-50">Testimoni</a></li>
+              <li><a @click="mobileOpen = false" href="#faq" class="block rounded-lg px-3 py-2 hover:bg-rose-50">FAQ</a></li>
+              <li class="pt-2 mt-2 border-t"><a @click="mobileOpen = false" href="/products" class="block rounded-lg px-3 py-2 hover:bg-rose-50">Semua Produk</a></li>
+            </ul>
+          </nav>
+          <div class="mt-auto pt-4">
+            <a :href="waLink" target="_blank" class="inline-flex items-center gap-2 rounded-xl bg-green-500 px-3 py-2 text-white font-semibold hover:bg-green-600">
+              <svg viewBox="0 0 32 32" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M19.11 17.24c-.29-.14-1.69-.83-1.95-.92-.26-.1-.45-.14-.64.14-.19.29-.74.92-.9 1.11-.17.19-.33.21-.61.07-.29-.14-1.22-.45-2.33-1.43-.86-.75-1.44-1.67-1.61-1.95-.17-.29-.02-.45.12-.59.12-.12.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.11-.23-.55-.47-.48-.64-.48h-.55c-.19 0-.5.07-.76.36-.26.29-1 1-1 2.43s1.02 2.82 1.16 3.01c.14.19 2 3.05 4.85 4.28 2.85 1.23 2.85.82 3.36.78.52-.03 1.69-.69 1.93-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33zM16 3.06c-7.14 0-12.94 5.8-12.94 12.94 0 2.28.6 4.5 2.086 7.594L3 29l6.73-1.76A12.88 12.88 0 0 0 16 28c7.14 0 12.94-5.8 12.94-12.94S23.14 3.06 16 3.06zM16 26.39c-2.2 0-4.28-.64-6.06-1.85l-.44-.28-3.61.95.96-3.51-.29-.45A10.66 10.66 0 1 1 26.66 16 10.67 10.67 0 0 1 16 26.39z"/></svg>
+              WhatsApp
+            </a>
+          </div>
+        </aside>
+      </div>
+    </transition>
 
     <section class="relative overflow-hidden">
       <div class="absolute inset-0 -z-10">
@@ -155,9 +194,9 @@
       </div>
 
       <div class="mt-10 text-center">
-        <button class="rounded-xl border px-5 py-3 font-semibold hover:bg-white btn-press">
-          Lihat Lebih Banyak
-        </button>
+        <a href="/products" class="inline-block rounded-xl border px-5 py-3 font-semibold hover:bg-white btn-press">
+          Lihat Lebih Banyak:
+        </a>
       </div>
     </section>
 
@@ -233,12 +272,26 @@
             <li>Retur & Tukar</li>
           </ul>
         </div>
+
+        <!--Follow Us Section-->
         <div>
           <h4 class="font-semibold">Ikuti Kami</h4>
           <div class="mt-3 flex gap-3">
-            <a href="#" class="inline-flex h-9 w-9 items-center justify-center rounded-full border hover:bg-rose-50">IG</a>
-            <a href="#" class="inline-flex h-9 w-9 items-center justify-center rounded-full border hover:bg-rose-50">TT</a>
-            <a href="#" class="inline-flex h-9 w-9 items-center justify-center rounded-full border hover:bg-rose-50">YT</a>
+            <a href="#" aria-label="Instagram" class="inline-flex h-9 w-9 items-center justify-center rounded-full border hover:bg-rose-50">
+              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true">
+                <path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 2 .3 2.5.6.6.3 1 .6 1.5 1.1.5.5.8.9 1.1 1.5.3.5.5 1.3.6 2.5.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 2-.6 2.5-.3.6-.6 1-1.1 1.5-.5.5-.9.8-1.5 1.1-.5.3-1.3.5-2.5.6-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-2-.3-2.5-.6-.6-.3-1-.6-1.5-1.1-.5-.5-.8-.9-1.1-1.5-.3-.5-.5-1.3-.6-2.5C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-2 .6-2.5.3-.6.6-1 1.1-1.5.5-.5.9-.8 1.5-1.1.5-.3 1.3-.5 2.5-.6C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.2 0-3.6 0-4.8.1-1 .1-1.5.2-1.8.4-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.2.3-.3.8-.4 1.8C3.1 10 3.1 10.4 3.1 12s0 2 .1 3.2c.1 1 .2 1.5.4 1.8.2.5.4.8.7 1.1.3.3.6.5 1.1.7.3.2.8.3 1.8.4 1.2.1 1.6.1 4.8.1s3.6 0 4.8-.1c1-.1 1.5-.2 1.8-.4.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.2-.3.3-.8.4-1.8.1-1.2.1-1.6.1-4.8s0-3.6-.1-4.8c-.1-1-.2-1.5-.4-1.8-.2-.5-.4-.8-.7-1.1-.3-.3-.6-.5-1.1-.7-.3-.2-.8-.3-1.8-.4-1.2-.1-1.6-.1-4.8-.1zM12 6.8a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4zm0 1.8a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8zM17.6 6.4a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="TikTok" class="inline-flex h-9 w-9 items-center justify-center rounded-full border hover:bg-rose-50">
+              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true">
+                <path d="M21 8.1c-2 0-3.8-.8-5.1-2.1V16a6 6 0 1 1-6-6c.3 0 .6 0 .9.1V12a3.5 3.5 0 1 0 3.5 3.5V2.8c1 .9 2.3 1.6 3.7 1.8.6.1 1.2.1 1.9.1v3.4c-.3 0-.6 0-.9 0z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="YouTube" class="inline-flex h-9 w-9 items-center justify-center rounded-full border hover:bg-rose-50">
+              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true">
+                <path d="M21.6 7.2c-.2-.9-.9-1.6-1.8-1.8C18.5 5.1 12 5.1 12 5.1s-6.5 0-7.8.3c-.9.2-1.6.9-1.8 1.8C2.1 8.5 2.1 12 2.1 12s0 3.5.3 4.8c.2.9.9 1.6 1.8 1.8 1.3.3 7.8.3 7.8.3s6.5 0 7.8-.3c.9-.2 1.6-.9 1.8-1.8.3-1.3.3-4.8.3-4.8s0-3.5-.3-4.8zM10 15.1V8.9l5.2 3.1L10 15.1z"/>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
@@ -253,15 +306,8 @@
       </div>
     </transition>
 
-    <transition name="fade">
-      <button v-if="showScrollTop" @click="scrollToTop" aria-label="Kembali ke atas"
-              class="fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full bg-rose-600 text-white shadow-lg hover:bg-rose-700 btn-press grid place-items-center">
-        <svg viewBox="0 0 24 24" class="h-6 w-6" fill="currentColor"><path d="M12 5l7 7-1.41 1.41L13 9.83V20h-2V9.83l-4.59 3.58L5 12z"/></svg>
-      </button>
-    </transition>
-
     <a :href="waLink" target="_blank" rel="noopener"
-       class="fixed bottom-6 left-6 z-50 h-12 w-12 grid place-items-center rounded-full bg-green-500 text-white shadow-lg hover:bg-green-600 btn-press"
+       class="fixed bottom-6 right-6 z-50 h-12 w-12 grid place-items-center rounded-full bg-green-500 text-white shadow-lg hover:bg-green-600 btn-press"
        aria-label="Hubungi via WhatsApp">
       <svg viewBox="0 0 32 32" class="h-7 w-7" fill="currentColor" aria-hidden="true">
         <path d="M19.11 17.24c-.29-.14-1.69-.83-1.95-.92-.26-.1-.45-.14-.64.14-.19.29-.74.92-.9 1.11-.17.19-.33.21-.61.07-.29-.14-1.22-.45-2.33-1.43-.86-.75-1.44-1.67-1.61-1.95-.17-.29-.02-.45.12-.59.12-.12.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.11-.23-.55-.47-.48-.64-.48h-.55c-.19 0-.5.07-.76.36-.26.29-1 1-1 2.43s1.02 2.82 1.16 3.01c.14.19 2 3.05 4.85 4.28 2.85 1.23 2.85.82 3.36.78.52-.03 1.69-.69 1.93-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33zM16 3.06c-7.14 0-12.94 5.8-12.94 12.94 0 2.28.6 4.5 2.086 7.594L3 29l6.73-1.76A12.88 12.88 0 0 0 16 28c7.14 0 12.94-5.8 12.94-12.94S23.14 3.06 16 3.06zM16 26.39c-2.2 0-4.28-.64-6.06-1.85l-.44-.28-3.61.95.96-3.51-.29-.45A10.66 10.66 0 1 1 26.66 16 10.67 10.67 0 0 1 16 26.39z"/>
@@ -280,17 +326,38 @@ type Category = 'Pria' | 'Wanita' | 'Unisex' | 'Blue Light' | 'Sunglasses'
 interface Product { id:number; name:string; price:number; material:Material; color:string; category:Category; rating:number; image:string; badge?:string }
 interface Testimonial { name:string; role:string; quote:string; avatar:string }
 
-const heroImage = 'https://images.unsplash.com/photo-1514756331096-242fdeb70d6b?q=80&w=1600&auto=format&fit=crop'
+// Eyewear-related image pools (Unsplash IDs) for randomness on each load
+const eyewearHeroImages = [
+  'https://images.unsplash.com/photo-1514756331096-242fdeb70d6b?q=80&w=1600&auto=format&fit=crop', // person with glasses closeup
+  'https://images.unsplash.com/photo-1516826957135-cbf43f0273a0?q=80&w=1600&auto=format&fit=crop', // eyewear on table
+  'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1600&auto=format&fit=crop', // sunglasses lifestyle
+  'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=1600&auto=format&fit=crop', // glasses on book
+  'https://images.unsplash.com/photo-1519677100203-a0e668c92439?q=80&w=1600&auto=format&fit=crop'  // eyewear store
+]
+const eyewearProductImages = [
+  'https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1509695507497-903c140c43b0?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1556306535-abccb114ff56?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1591311630200-238fb0ad9420?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1590351221410-8ab3e7dbf65d?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1556306535-672da6fbf49e?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1586297011627-2ef0e6f83fe6?q=80&w=1200&auto=format&fit=crop'
+]
+function randItem<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)] }
+
+const heroImage = randItem(eyewearHeroImages)
 
 const products = reactive<Product[]>([
-  { id: 1, name: 'Daphne Matte Rose', price: 495000, material: 'Acetate', color: 'Soft Rose', category: 'Wanita', rating: 4.8, image: 'https://images.unsplash.com/photo-1509695507497-903c140c43b0?q=80&w=1200&auto=format&fit=crop', badge: 'Baru' },
-  { id: 2, name: 'Atlas Thin', price: 545000, material: 'Titanium', color: 'Silver', category: 'Pria', rating: 4.7, image: 'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=1200&auto=format&fit=crop', badge: 'Favorit' },
-  { id: 3, name: 'Noir Round', price: 425000, material: 'TR90', color: 'Black', category: 'Unisex', rating: 4.6, image: 'https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=1200&auto=format&fit=crop' },
-  { id: 4, name: 'Solare UV400', price: 575000, material: 'Acetate', color: 'Brown', category: 'Sunglasses', rating: 4.9, image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=1200&auto=format&fit=crop' },
-  { id: 5, name: 'Clarity BlueShield', price: 395000, material: 'TR90', color: 'Clear', category: 'Blue Light', rating: 4.5, image: 'https://images.unsplash.com/photo-1517495306984-937f064bdab1?q=80&w=1200&auto=format&fit=crop' },
-  { id: 6, name: 'Milo Rose Gold', price: 615000, material: 'Titanium', color: 'Rose Gold', category: 'Wanita', rating: 4.8, image: 'https://images.unsplash.com/photo-1591311630200-238fb0ad9420?q=80&w=1200&auto=format&fit=crop' },
-  { id: 7, name: 'Fjord Minimal', price: 445000, material: 'TR90', color: 'Grey', category: 'Unisex', rating: 4.4, image: 'https://images.unsplash.com/photo-1590351221410-8ab3e7dbf65d?q=80&w=1200&auto=format&fit=crop' },
-  { id: 8, name: 'Soleil Matte', price: 535000, material: 'Acetate', color: 'Matte Brown', category: 'Sunglasses', rating: 4.7, image: 'https://images.unsplash.com/photo-1556306535-abccb114ff56?q=80&w=1200&auto=format&fit=crop' },
+  { id: 1, name: 'Daphne Matte Rose', price: 495000, material: 'Acetate', color: 'Soft Rose', category: 'Wanita', rating: 4.8, image: randItem(eyewearProductImages), badge: 'Baru' },
+  { id: 2, name: 'Atlas Thin', price: 545000, material: 'Titanium', color: 'Silver', category: 'Pria', rating: 4.7, image: randItem(eyewearProductImages), badge: 'Favorit' },
+  { id: 3, name: 'Noir Round', price: 425000, material: 'TR90', color: 'Black', category: 'Unisex', rating: 4.6, image: randItem(eyewearProductImages) },
+  { id: 4, name: 'Solare UV400', price: 575000, material: 'Acetate', color: 'Brown', category: 'Sunglasses', rating: 4.9, image: randItem(eyewearProductImages) },
+  { id: 5, name: 'Clarity BlueShield', price: 395000, material: 'TR90', color: 'Clear', category: 'Blue Light', rating: 4.5, image: randItem(eyewearProductImages) },
+  { id: 6, name: 'Milo Rose Gold', price: 615000, material: 'Titanium', color: 'Rose Gold', category: 'Wanita', rating: 4.8, image: randItem(eyewearProductImages) },
+  { id: 7, name: 'Fjord Minimal', price: 445000, material: 'TR90', color: 'Grey', category: 'Unisex', rating: 4.4, image: randItem(eyewearProductImages) },
+  { id: 8, name: 'Soleil Matte', price: 535000, material: 'Acetate', color: 'Matte Brown', category: 'Sunglasses', rating: 4.7, image: randItem(eyewearProductImages) },
 ])
 
 const testimonials = reactive<Testimonial[]>([
@@ -307,6 +374,13 @@ const toast = ref<string>('')
 const cartCount = ref<number>(0)
 const selectedCategory = ref<'all' | Category>('all')
 const sortBy = ref<'popular' | 'price-asc' | 'price-desc'>('popular')
+
+// Mobile side navigation state
+const mobileOpen = ref(false)
+// Close on Escape
+window.addEventListener('keydown', (e: KeyboardEvent) => {
+  if (e.key === 'Escape') mobileOpen.value = false
+})
 
 const categories = computed(() => Array.from(new Set(products.map(p => p.category))))
 const filteredProducts = computed(() => {
@@ -356,7 +430,7 @@ function onScroll() {
   const y = window.scrollY || window.pageYOffset
   if (!ticking) {
     window.requestAnimationFrame(() => { scrollY.value = y; ticking = false })
-    ticking = True
+    ticking = true
   }
 }
 if (!prefersReduced) window.addEventListener('scroll', onScroll, { passive: true })
@@ -400,10 +474,6 @@ const promoParallaxStyle = computed(() => {
   return { transform: `translateX(${offset.toFixed(1)}px)` }
 })
 
-const showScrollTop = computed(() => scrollY.value > 420)
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' })
-}
 </script>
 
 <style scoped>
